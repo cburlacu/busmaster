@@ -27,6 +27,18 @@
 #include "LINDriverDefines.h"
 #include "../../BusmasterDBNetwork/Include/IBMNetWorkGetService.h"
 #include "IBusService.h"
+
+enum
+{
+    DRIVER_LIN_ISOLAR_EVE_VLIN = 0,
+    DRIVER_LIN_VECTOR_XL,
+    DRIVER_LIN_ETAS_BOA,
+    DRIVER_LIN_PEAK_USB,
+    DRIVER_LIN_KVASER,
+    DIL_LIN_TOTAL,
+    DAL_LIN_NONE = ~0x0
+};
+
 class CBaseDIL_LIN : public IBusService
 {
 public:

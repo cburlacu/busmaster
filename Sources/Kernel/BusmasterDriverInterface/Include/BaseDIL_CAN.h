@@ -25,6 +25,29 @@
 
 #include "CANDriverDefines.h"
 #include "IBusService.h"
+
+enum
+{
+    DRIVER_CAN_STUB = 0,
+    DRIVER_CAN_PEAK_USB,
+    DRIVER_CAN_ICS_NEOVI,
+    DRIVER_CAN_ETAS_BOA,
+    DRIVER_CAN_ETAS_ES581,
+    DRIVER_CAN_ETAS_ES5814,
+    DRIVER_CAN_ETAS_ES5821,
+    DRIVER_CAN_VECTOR_XL,
+    DRIVER_CAN_KVASER_CAN,
+    DRIVER_CAN_MHS,
+    DRIVER_CAN_NSI,
+    DRIVER_CAN_IXXAT,
+    DRIVER_CAN_VSCOM,
+    DRIVER_CAN_IVIEW,
+    DRIVER_CAN_ISOLAR,
+    DIL_TOTAL,          // Its value must be <= MAX_DILS
+    DAL_NONE = ~0x0
+};
+
+
 class CBaseDIL_CAN : public IBusService
 {
 public:

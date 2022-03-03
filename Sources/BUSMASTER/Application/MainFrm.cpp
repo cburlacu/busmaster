@@ -178,40 +178,6 @@ SMSGENTRY* CTxMsgWndJ1939::m_psMsgRoot = nullptr;
 
 #define	USE_MSG_AUTOIT_REQUEST				WM_USER + 1000
 
-enum
-{
-    DRIVER_CAN_STUB = 0,
-    DRIVER_CAN_PEAK_USB,
-    DRIVER_CAN_ICS_NEOVI,
-    DRIVER_CAN_ETAS_BOA,
-    DRIVER_CAN_ETAS_ES581,
-    DRIVER_CAN_ETAS_ES5814,
-	DRIVER_CAN_ETAS_ES5821,
-    DRIVER_CAN_VECTOR_XL,
-    DRIVER_CAN_KVASER_CAN,
-    DRIVER_CAN_MHS,
-    DRIVER_CAN_NSI,
-    DRIVER_CAN_IXXAT,
-    DRIVER_CAN_VSCOM,
-    DRIVER_CAN_IVIEW,
-    DRIVER_CAN_ISOLAR,
-    DIL_TOTAL,          // Its value must be <= MAX_DILS
-    DAL_NONE = ~0x0
-};
-
-enum
-{
-    DRIVER_LIN_ISOLAR_EVE_VLIN = 0,
-    DRIVER_LIN_VECTOR_XL,
-    DRIVER_LIN_ETAS_BOA,
-    DRIVER_LIN_PEAK_USB,
-    DRIVER_LIN_KVASER,
-    DIL_LIN_TOTAL,
-    DAL_LIN_NONE = ~0x0
-};
-
-
-
 IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
@@ -345,12 +311,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
     ON_UPDATE_COMMAND_UI(IDM_CFGN_REPLAY, OnUpdateCfgnReplay)
     ON_COMMAND(IDM_CONFIGURE_SIMULATEDSYSTEMS, OnConfigureSimulatedsystems)
     ON_COMMAND(IDM_CONFIGURE_SIMULATEDSYSTEMS_LIN, OnConfigureSimulatedsystemsLin)
-    ON_COMMAND_RANGE(IDC_SELECT_DRIVER,IDC_SELECT_DRIVER + 14, OnSelectDriver)
-    ON_UPDATE_COMMAND_UI_RANGE(IDC_SELECT_DRIVER,IDC_SELECT_DRIVER + 14, OnUpdateSelectDriver)
+    ON_COMMAND_RANGE(IDC_SELECT_DRIVER,IDC_SELECT_DRIVER + DIL_TOTAL, OnSelectDriver)
+    ON_UPDATE_COMMAND_UI_RANGE(IDC_SELECT_DRIVER,IDC_SELECT_DRIVER + DIL_TOTAL, OnUpdateSelectDriver)
     
     
-    ON_COMMAND_RANGE(IDC_SELECT_LIN_DRIVER,IDC_SELECT_LIN_DRIVER + 5, OnSelectLINDriver)
-    ON_UPDATE_COMMAND_UI_RANGE(IDC_SELECT_LIN_DRIVER,IDC_SELECT_LIN_DRIVER + 5, OnUpdateSelectLINDriver)
+    ON_COMMAND_RANGE(IDC_SELECT_LIN_DRIVER,IDC_SELECT_LIN_DRIVER + DIL_LIN_TOTAL, OnSelectLINDriver)
+    ON_UPDATE_COMMAND_UI_RANGE(IDC_SELECT_LIN_DRIVER,IDC_SELECT_LIN_DRIVER + DIL_LIN_TOTAL, OnUpdateSelectLINDriver)
     ON_COMMAND(ID_HELP_FINDER, CMDIFrameWndEx::OnHelpFinder)
     ON_COMMAND(ID_HELP, CMDIFrameWndEx::OnHelp)
     ON_COMMAND(ID_CONTEXT_HELP, CMDIFrameWndEx::OnContextHelp)
@@ -721,7 +687,7 @@ for ( auto itrFrame : frameList )
                     std::map<ISignal*, SignalInstanse> signalList;
                     itrFrame->GetSignalList( signalList );
                     //sSIGNALS* pSig = pMsg-> m_psSignals;
-for ( auto pSig : signalList )
+                    for ( auto pSig : signalList )
                     {
                         SSUBENTRY sSubEntry;
                         pSig.first->GetName( name );
@@ -741,7 +707,7 @@ for ( auto pSig : signalList )
                 {
                     std::map<ISignal*, SignalInstanse> signalList;
                     itrFrame->GetSignalList( signalList );
-for ( auto pSig : signalList )
+                    for ( auto pSig : signalList )
                     {
                         SSUBENTRY sSubEntry;
                         pSig.first->GetName( name );
@@ -2250,7 +2216,7 @@ void CMainFrame::ApplyFilterConfigToMsgWnd(std::map<std::string, bool>& filtersA
     sTempFilter.vClear();
     sTempFilter.m_psFilters = new SFILTERSET[filtersApplied.size()];
 
-for (auto filter : filtersApplied)
+    for (auto filter : filtersApplied)
     {
         const PSFILTERSET psTemp = SFILTERSET::psGetFilterSetPointer(canFilters.m_psFilters, canFilters.m_ushTotal, filter.first.c_str());
         if (psTemp != nullptr)
@@ -2274,7 +2240,7 @@ void CMainFrame::ApplyFilterConfigToMsgWnd(std::map<std::string, bool>& filtersA
     sTempFilter.vClear();
     sTempFilter.m_psFilters = new SFILTERSET[filtersApplied.size()];
 
-for (auto filter : filtersApplied)
+    for (auto filter : filtersApplied)
     {
         const PSFILTERSET psTemp = SFILTERSET::psGetFilterSetPointer(canFilters.m_psFilters, canFilters.m_ushTotal, filter.first.c_str());
         if (psTemp != nullptr)
@@ -13175,7 +13141,7 @@ void CMainFrame::vVlaidateAndLoadFibexConfig(sLinConfigContainer& ouFibexContain
                     std::list<IScheduleTable*> lstScheduleTables;
                     (*itrCluster)->GetElementList(eScheduleTableElement, mapScheduleTables);
 
-for(auto itrScheduleTable : mapScheduleTables)
+                    for(auto itrScheduleTable : mapScheduleTables)
                     {
                         lstScheduleTables.push_back((IScheduleTable*)itrScheduleTable.second);
                     }
