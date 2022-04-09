@@ -369,3 +369,9 @@ Tests/PMD/cpd.html
 Tests/PMD/cpd.xml
 Tests/PMD/cpd-fixed.xml
 Tests/Requirements Traceability Matrix/report.html
+
+# any other generated folders / files
+Debug*/
+Release*/
+.vs/
+build/
